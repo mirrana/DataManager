@@ -27,6 +27,7 @@
 
 package com.abopu.data.dao;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class AbstractDAO<T> implements DAO<T> {
+public abstract class AbstractDAO<T extends Serializable> implements DAO<T> {
 
 	protected final List<T> processResults(ResultSet rs, ResultExtractor<T> extractor) throws SQLException {
 		return (List<T>) processResults(rs, extractor, ArrayList::new);
