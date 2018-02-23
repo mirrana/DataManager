@@ -35,21 +35,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class AbstractDAO<T extends Serializable> implements DAO<T> {
+public abstract class AbstractDAO<RecordType extends Serializable, KeyType extends Serializable> implements DAO<RecordType, KeyType> {
 
-	protected final List<T> processResults(ResultSet rs, ResultExtractor<T> extractor) throws SQLException {
-		return (List<T>) processResults(rs, extractor, ArrayList::new);
+	protected final List<RecordType> processResults(ResultSet rs, ResultExtractor<RecordType> extractor) throws SQLException {
+		return (List<RecordType>) processResults(rs, extractor, ArrayList::new);
 	}
 
-	protected final Collection<T> processResults(ResultSet rs, ResultExtractor<T> extractor, Supplier<Collection<T>> collectionSupplier) throws SQLException {
-		Collection<T> results = collectionSupplier.get();
+	protected final Collection<RecordType> processResults(ResultSet rs, ResultExtractor<RecordType> extractor, Supplier<Collection<RecordType>> collectionSupplier) throws SQLException {
+		Collection<RecordType> results = collectionSupplier.get();
 		while (rs.next()) {
 			results.add(extractor.extract(rs));
 		}
 
 		return results;
 	}
-
+	
 
 
 	/***************************************************************************

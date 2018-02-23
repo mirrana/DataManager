@@ -27,12 +27,18 @@
 
 package com.abopu.data.dao;
 
+import com.abopu.data.bind.BindObjects;
 import com.abopu.data.dao.exception.DaoException;
 
+import java.sql.Connection;
 import java.util.Collection;
-import java.util.Map;
 
-public interface DAO<T> {
+/**
+ * 
+ * @param <RecordType> The type of object that the DAO will read from and write to for CRUD operations.
+ * @param <KeyType> The type of the primary key for the data that this DAO operates on.
+ */
+public interface DAO<RecordType, KeyType> {
 
 	/**
 	 * <p>Persist a new object to the backing store.</p>
@@ -42,7 +48,7 @@ public interface DAO<T> {
 	 * @param object record to persist
 	 * @return copy of object saved with generated values included
 	 */
-	T create(T object) throws DaoException;
+	RecordType create(Connection conn, RecordType object) throws DaoException;
 
 	/**
 	 * <p>Remove a record from the backing store.</p>
@@ -50,9 +56,9 @@ public interface DAO<T> {
 	 * @param id id of record to remove
 	 * @return true if a record was deleted, false otherwise.
 	 */
-	boolean delete(Integer id) throws DaoException;
+	boolean delete(Connection conn, KeyType id) throws DaoException;
 
-	Collection<T> getAll() throws DaoException;
+	Collection<RecordType> get(Connection conn, DaoFilter<RecordType> filter) throws DaoException;
 
 	/**
 	 * <p>Get data from the backing store.</p>
@@ -61,7 +67,7 @@ public interface DAO<T> {
 	 * @param id primary key of record to retrieve
 	 * @return a DAO representing the object requested, or null if the requested record does not exist.
 	 */
-	T get(Integer id) throws DaoException;
+	RecordType get(Connection conn, KeyType id) throws DaoException;
 
 	/**
 	 * <p>Persist an updated version of a record to the backing store.</p>
@@ -70,9 +76,8 @@ public interface DAO<T> {
 	 * then nothing happens.</p>
 	 *
 	 * @param object record to persist
+	 * @param bindObjects
 	 * @return true if an update was performed, false otherwise.
 	 */
-	boolean update(T object) throws DaoException;
-
-	Collection<T> getByQuery(Map<String, String> query) throws DaoException;
+	boolean update(Connection conn, RecordType object, BindObjects bindObjects) throws DaoException;
 }
