@@ -25,11 +25,11 @@
  * DAMAGE.
  */
 
-package com.abopu.data.dao.exception;
+package com.abopu.data.jdbc.dao.exception;
 
-import static com.abopu.data.dao.exception.DaoException.ErrorCode.*;
+import static com.abopu.data.jdbc.dao.exception.RepositoryException.ErrorCode.*;
 
-public class DaoException extends Exception {
+public class RepositoryException extends Exception {
 
 	private ErrorCode reason;
 
@@ -42,26 +42,26 @@ public class DaoException extends Exception {
 	 **************************************************************************/
 
 
-	public DaoException(ErrorCode reason) {
+	public RepositoryException(ErrorCode reason) {
 		setReason(reason);
 	}
 
-	public DaoException(String message, ErrorCode reason) {
+	public RepositoryException(String message, ErrorCode reason) {
 		super(message);
 		setReason(reason);
 	}
 
-	public DaoException(String message, Throwable cause) {
+	public RepositoryException(String message, Throwable cause) {
 		super(message, cause);
 		setReason(EXCEPTION);
 	}
 
-	public DaoException(Throwable cause) {
+	public RepositoryException(Throwable cause) {
 		super(cause);
 		setReason(EXCEPTION);
 	}
 
-	public DaoException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	public RepositoryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		setReason(EXCEPTION);
 	}
@@ -82,7 +82,7 @@ public class DaoException extends Exception {
 		this.reason = reason;
 	}
 
-	public DaoException withReason(ErrorCode reason) {
+	public RepositoryException withReason(ErrorCode reason) {
 		setReason(reason);
 		return this;
 	}
