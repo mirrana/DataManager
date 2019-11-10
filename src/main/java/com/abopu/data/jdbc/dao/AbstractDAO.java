@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.abopu.data.accesscontrol.PermissionDeniedException;
@@ -178,6 +179,52 @@ public class AbstractDAO {
 		Objects.requireNonNull(collectionSupplier, "Parameter 'collectionSupplier' cannot be null.");
 
 		return processResults(rs, ctx, extractor, collectionSupplier, null);
+	}
+
+	/**
+	 * Return the first result from the {@link ResultSet}, or <code>null</code>
+	 * if no such result exists.
+	 *
+	 * @param rs        the {@link ResultSet} containing table data to read
+	 * @param ctx       the requesting user's {@link RequestContext}, used for permission checking (optional)
+	 * @param extractor a function that converts a single row in the given {@link ResultSet} to an object representation
+	 * @param <T>       the type of object that will be returned by the {@link ResultExtractor}
+	 * @return an object representing the first row of results in the {@link ResultSet}, or <code>null</code> if no results found.
+	 * @throws SQLException     in the event of any issues iterating over the {@link ResultSet}
+	 * @throws ExtractException in the event that an error happens within the {@link ResultExtractor}.
+	 */
+	protected <T> Optional<T> firstResult(
+			@NotNull ResultSet rs,
+			@NotNull RequestContext ctx,
+			@NotNull ResultExtractor<T> extractor) throws SQLException, ExtractException
+	{
+		Objects.requireNonNull(rs, "Parameter 'rs' cannot be null.");
+		Objects.requireNonNull(ctx, "Parameter 'ctx' cannot be null.");
+		Objects.requireNonNull(extractor, "Parameter 'extractor' cannot be null.");
+
+		return processResults(rs, ctx, extractor).stream().findFirst();
+	}
+
+	/**
+	 * Return the first result from the {@link ResultSet}. If no results were
+	 * found, then the exception given by <code>throwIfEmpty</code> will be
+	 * thrown.
+	 *
+	 * @param rs           the {@link ResultSet} containing table data to read
+	 * @param extractor    a function that converts a single row in the given {@link ResultSet} to an object representation
+	 * @param <T>          the type of object that will be returned by the {@link ResultExtractor}
+	 * @return an object representing the first row of results in the {@link ResultSet}, or <code>null</code> if no results found.
+	 * @throws SQLException     in the event of any issues iterating over the {@link ResultSet}
+	 * @throws ExtractException in the event that an error happens within the {@link ResultExtractor}.
+	 */
+	protected <T> Optional<T> firstResult(
+			@NotNull ResultSet rs,
+			@NotNull ResultExtractor<T> extractor) throws SQLException, ExtractException
+	{
+		Objects.requireNonNull(rs, "Parameter 'rs' cannot be null.");
+		Objects.requireNonNull(extractor, "Parameter 'extractor' cannot be null.");
+
+		return processResults(rs, extractor).stream().findFirst();
 	}
 
 
