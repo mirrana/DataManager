@@ -25,6 +25,7 @@
 package com.abopu.data;
 
 import com.abopu.data.jdbc.dao.exception.RepositoryException;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
@@ -42,7 +43,7 @@ public interface Repository<T, R> {
 	 * @param record the record to persist
 	 * @return copy of object saved with generated values included
 	 */
-	T create(T record) throws RepositoryException;
+	T create(@NotNull T record) throws RepositoryException;
 
 	/**
 	 * Get data from the backing store.
@@ -51,7 +52,7 @@ public interface Repository<T, R> {
 	 * @param id primary key of record to retrieve
 	 * @return a Repository representing the object requested, or null if the requested record does not exist.
 	 */
-	T read(R id) throws RepositoryException;
+	T read(@NotNull R id) throws RepositoryException;
 
 	Collection<T> read(Criteria criteria) throws RepositoryException;
 
@@ -71,13 +72,13 @@ public interface Repository<T, R> {
 	 * @param record record to persist
 	 * @return true if an update was performed, false otherwise.
 	 */
-	boolean update(T record) throws RepositoryException;
+	boolean update(@NotNull T record) throws RepositoryException;
 
 	/**
 	 * Remove a record from the backing store.
 	 *
-	 * @param record the record to remove
+	 * @param id primary key for the record to remove
 	 * @return true if a record was deleted, false otherwise.
 	 */
-	boolean delete(T record) throws RepositoryException;
+	boolean delete(@NotNull R id) throws RepositoryException;
 }

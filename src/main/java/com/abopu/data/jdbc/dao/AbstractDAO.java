@@ -58,7 +58,7 @@ public class AbstractDAO {
 
 	/** Logger */
 	private static final Logger LOG = Logger.getLogger(AbstractDAO.class);
-	
+
 
 
 	/***************************************************************************

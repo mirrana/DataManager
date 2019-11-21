@@ -51,20 +51,7 @@ public class RepositoryException extends Exception {
 		setReason(reason);
 	}
 
-	public RepositoryException(String message, Throwable cause) {
-		super(message, cause);
-		setReason(EXCEPTION);
-	}
 
-	public RepositoryException(Throwable cause) {
-		super(cause);
-		setReason(EXCEPTION);
-	}
-
-	public RepositoryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		setReason(EXCEPTION);
-	}
 
 
 
