@@ -80,11 +80,10 @@ public class AbstractDAO {
 	 * @param <T>       the type of object that will be returned by the {@link ResultExtractor}
 	 * @return an {@link ArrayList} of database objects, one for each row in <code>rs</code>
 	 * @throws SQLException     in the event of any issues iterating over the {@link ResultSet}
-	 * @throws ExtractException in the event that an error happens within the {@link ResultExtractor}.
 	 */
 	protected <T> List<T> processResults(
 			@NotNull ResultSet rs,
-			@NotNull ResultExtractor<T> extractor) throws SQLException, ExtractException {
+			@NotNull ResultExtractor<T> extractor) throws SQLException {
 
 		Objects.requireNonNull(rs, "Parameter 'rs' cannot be null.");
 		Objects.requireNonNull(extractor, "Parameter 'extractor' cannot be null.");
@@ -111,12 +110,11 @@ public class AbstractDAO {
 	 * @return an {@link ArrayList} of database objects, one for each row in <code>rs</code>
 	 * @throws SQLException     in the event of any issues iterating over the {@link ResultSet}
 	 * @throws X                if the ResultSet is empty and <code>throwIfEmpty</code> is not null.
-	 * @throws ExtractException in the event that an error happens within the {@link ResultExtractor}.
 	 */
 	protected <T, X extends Throwable> List<T> processResults(
 			@NotNull ResultSet rs,
 			@NotNull ResultExtractor<T> extractor,
-			@NotNull Supplier<X> throwIfEmpty) throws SQLException, X, ExtractException {
+			@NotNull Supplier<X> throwIfEmpty) throws SQLException, X {
 
 		Objects.requireNonNull(rs, "Parameter 'rs' cannot be null.");
 		Objects.requireNonNull(extractor, "Parameter 'extractor' cannot be null.");
@@ -142,12 +140,11 @@ public class AbstractDAO {
 	 * @param <T>       the type of object that will be returned by the {@link ResultExtractor}
 	 * @return an {@link ArrayList} of database objects, one for each row in <code>rs</code>
 	 * @throws SQLException     in the event of any issues iterating over the {@link ResultSet}
-	 * @throws ExtractException in the event that an error happens within the {@link ResultExtractor}.
 	 */
 	protected <T> List<T> processResults(
 			@NotNull ResultSet rs,
 			@Nullable RequestContext ctx,
-			@NotNull ResultExtractor<T> extractor) throws SQLException, ExtractException {
+			@NotNull ResultExtractor<T> extractor) throws SQLException {
 
 		Objects.requireNonNull(rs, "Parameter 'rs' cannot be null.");
 		Objects.requireNonNull(extractor, "Parameter 'extractor' cannot be null.");
@@ -166,13 +163,12 @@ public class AbstractDAO {
 	 * @return a {@link Collection} of database objects, one for each row in <code>rs</code>. The collection
 	 * returned depends on what is supplied by <code>collectionSupplier</code>.
 	 * @throws SQLException     in the event of any issues iterating over the {@link ResultSet}
-	 * @throws ExtractException in the event that an error happens within the {@link ResultExtractor}.
 	 */
 	protected <T, C extends Collection<T>> C processResults(
 			@NotNull ResultSet rs,
 			@Nullable RequestContext ctx,
 			@NotNull ResultExtractor<T> extractor,
-			@NotNull Supplier<C> collectionSupplier) throws SQLException, ExtractException {
+			@NotNull Supplier<C> collectionSupplier) throws SQLException {
 
 		Objects.requireNonNull(rs, "Parameter 'rs' cannot be null.");
 		Objects.requireNonNull(extractor, "Parameter 'extractor' cannot be null.");
@@ -191,12 +187,11 @@ public class AbstractDAO {
 	 * @param <T>       the type of object that will be returned by the {@link ResultExtractor}
 	 * @return an object representing the first row of results in the {@link ResultSet}, or <code>null</code> if no results found.
 	 * @throws SQLException     in the event of any issues iterating over the {@link ResultSet}
-	 * @throws ExtractException in the event that an error happens within the {@link ResultExtractor}.
 	 */
 	protected <T> Optional<T> firstResult(
 			@NotNull ResultSet rs,
 			@NotNull RequestContext ctx,
-			@NotNull ResultExtractor<T> extractor) throws SQLException, ExtractException
+			@NotNull ResultExtractor<T> extractor) throws SQLException
 	{
 		Objects.requireNonNull(rs, "Parameter 'rs' cannot be null.");
 		Objects.requireNonNull(ctx, "Parameter 'ctx' cannot be null.");
@@ -215,11 +210,10 @@ public class AbstractDAO {
 	 * @param <T>          the type of object that will be returned by the {@link ResultExtractor}
 	 * @return an object representing the first row of results in the {@link ResultSet}, or <code>null</code> if no results found.
 	 * @throws SQLException     in the event of any issues iterating over the {@link ResultSet}
-	 * @throws ExtractException in the event that an error happens within the {@link ResultExtractor}.
 	 */
 	protected <T> Optional<T> firstResult(
 			@NotNull ResultSet rs,
-			@NotNull ResultExtractor<T> extractor) throws SQLException, ExtractException
+			@NotNull ResultExtractor<T> extractor) throws SQLException
 	{
 		Objects.requireNonNull(rs, "Parameter 'rs' cannot be null.");
 		Objects.requireNonNull(extractor, "Parameter 'extractor' cannot be null.");
@@ -261,7 +255,6 @@ public class AbstractDAO {
 	 * @param <X>                a subtype of {@link Throwable} provided by <code>throwIfEmpty</code>
 	 * @return a {@link Collection} of database objects, one for each row in <code>rs</code>
 	 * @throws SQLException     in the event of any issues iterating over the {@link ResultSet}
-	 * @throws ExtractException in the event that an error happens within the {@link ResultExtractor}.
 	 * @throws X                if the ResultSet is empty and <code>throwIfEmpty</code> is not null.
 	 */
 	private <T, C extends Collection<T>, X extends Throwable> C processResults(
@@ -269,7 +262,7 @@ public class AbstractDAO {
 			@Nullable RequestContext ctx,
 			@NotNull ResultExtractor<T> extractor,
 			@NotNull Supplier<C> collectionSupplier,
-			@Nullable Supplier<? extends X> throwIfEmpty) throws SQLException, ExtractException, X {
+			@Nullable Supplier<? extends X> throwIfEmpty) throws SQLException, X {
 
 		Objects.requireNonNull(rs, "Parameter 'rs' cannot be null.");
 		Objects.requireNonNull(extractor, "Parameter 'extractor' cannot be null.");
@@ -330,78 +323,8 @@ public class AbstractDAO {
 		 * @return an object containing data about the next row in <code>rs</code>
 		 * @throws SQLException              if there is any problem reading from the {@link ResultSet}
 		 * @throws PermissionDeniedException if the requesting user is not allowed to view the data
-		 * @throws ExtractException          in the event that an unrecoverable error happens in the implementation of this method.
 		 * @see AbstractDAO#processResults(ResultSet, RequestContext, ResultExtractor, Supplier, Supplier)
 		 */
-		T extract(@NotNull ResultSet rs, @Nullable RequestContext ctx) throws SQLException, PermissionDeniedException, ExtractException;
-	}
-
-	/**
-	 * Wraps an exception that occurs inside an extract method.
-	 */
-	protected class ExtractException extends Exception {
-
-		/***************************************************************************
-		 *
-		 * Constants
-		 *
-		 **************************************************************************/
-
-		private static final long serialVersionUID = 4040921857821358418L;
-
-
-		/***************************************************************************
-		 *
-		 * Constructors
-		 *
-		 **************************************************************************/
-
-		/**
-		 * Constructs a new exception with the specified detail message.  The
-		 * cause is not initialized, and may subsequently be initialized by
-		 * a call to {@link #initCause}.
-		 *
-		 * @param message the detail message. The detail message is saved for
-		 *                later retrieval by the {@link #getMessage()} method.
-		 */
-		public ExtractException(String message) {
-			super(message);
-		}
-
-		/**
-		 * Constructs a new exception with the specified detail message and
-		 * cause.  <p>Note that the detail message associated with
-		 * {@code cause} is <i>not</i> automatically incorporated in
-		 * this exception's detail message.
-		 *
-		 * @param message the detail message (which is saved for later retrieval
-		 *                by the {@link #getMessage()} method).
-		 * @param cause   the cause (which is saved for later retrieval by the
-		 *                {@link #getCause()} method).  (A <tt>null</tt> value is
-		 *                permitted, and indicates that the cause is nonexistent or
-		 *                unknown.)
-		 * @since 1.4
-		 */
-		public ExtractException(String message, Throwable cause) {
-			super(message, cause);
-		}
-
-		/**
-		 * Constructs a new exception with the specified cause and a detail
-		 * message of <tt>(cause==null ? null : cause.toString())</tt> (which
-		 * typically contains the class and detail message of <tt>cause</tt>).
-		 * This constructor is useful for exceptions that are little more than
-		 * wrappers for other throwables (for example, {@link
-		 * PrivilegedActionException}).
-		 *
-		 * @param cause the cause (which is saved for later retrieval by the
-		 *              {@link #getCause()} method).  (A <tt>null</tt> value is
-		 *              permitted, and indicates that the cause is nonexistent or
-		 *              unknown.)
-		 * @since 1.4
-		 */
-		public ExtractException(Throwable cause) {
-			super(cause);
-		}
+		T extract(@NotNull ResultSet rs, @Nullable RequestContext ctx) throws SQLException, PermissionDeniedException;
 	}
 }
