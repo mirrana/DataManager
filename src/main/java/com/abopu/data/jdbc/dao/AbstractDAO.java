@@ -27,7 +27,13 @@
 
 package com.abopu.data.jdbc.dao;
 
-import java.security.PrivilegedActionException;
+import com.abopu.data.accesscontrol.PermissionDeniedException;
+import com.abopu.data.accesscontrol.RequestContext;
+import com.abopu.logging.Logger;
+import com.abopu.util.Throwing;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,12 +42,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
-
-import com.abopu.data.accesscontrol.PermissionDeniedException;
-import com.abopu.data.accesscontrol.RequestContext;
-import com.abopu.logging.Logger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Class containing methods that any Repository could make use of.
@@ -282,6 +282,8 @@ public class AbstractDAO {
 				results.add(extractor.extract(rs, ctx));
 			} catch (PermissionDeniedException e) {
 				LOG.info("Skipping record due to lack of permissions.");
+			} catch (Throwable t) {
+				Throwing.sneakyThrow(t);
 			}
 		}
 
@@ -325,6 +327,6 @@ public class AbstractDAO {
 		 * @throws PermissionDeniedException if the requesting user is not allowed to view the data
 		 * @see AbstractDAO#processResults(ResultSet, RequestContext, ResultExtractor, Supplier, Supplier)
 		 */
-		T extract(@NotNull ResultSet rs, @Nullable RequestContext ctx) throws SQLException, PermissionDeniedException;
+		T extract(@NotNull ResultSet rs, @Nullable RequestContext ctx) throws Exception;
 	}
 }
