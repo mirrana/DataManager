@@ -27,8 +27,6 @@
 
 package com.abopu.data.jdbc.dao.exception;
 
-import static com.abopu.data.jdbc.dao.exception.RepositoryException.ErrorCode.*;
-
 public class RepositoryException extends Exception {
 
 	private ErrorCode reason;

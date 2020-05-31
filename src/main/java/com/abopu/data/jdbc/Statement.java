@@ -1,7 +1,9 @@
 package com.abopu.data.jdbc;
 
-import java.sql.*;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
 
 /**
  * @author Sarah Skanes
