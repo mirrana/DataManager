@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 /**
  * A class for using slf4j as an optional dependency.
  *
- * @author Sarah Skanes &lt;agent154@abopu.com&gt;
+ * @author Sarah Skanes &lt;mirrana@abopu.com&gt;
  */
 public class Logger {
 	

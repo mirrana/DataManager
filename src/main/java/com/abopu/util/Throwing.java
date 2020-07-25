@@ -1,7 +1,7 @@
 package com.abopu.util;
 
 /**
- * @author Sarah Skanes &lt;agent154@abopu.com&gt;
+ * @author Sarah Skanes &lt;mirrana@abopu.com&gt;
  */
 public class Throwing {
 

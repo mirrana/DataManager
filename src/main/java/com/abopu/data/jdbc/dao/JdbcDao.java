@@ -46,7 +46,7 @@ import java.util.function.Supplier;
 /**
  * Class containing methods that any Repository could make use of.
  *
- * @author Sarah Skanes &lt;agent154@abopu.com&gt;
+ * @author Sarah Skanes &lt;mirrana@abopu.com&gt;
  */
 public class JdbcDao {
 
