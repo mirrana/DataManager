@@ -48,7 +48,7 @@ import java.util.function.Supplier;
  *
  * @author Sarah Skanes &lt;agent154@abopu.com&gt;
  */
-public class AbstractDAO {
+public class JdbcDao {
 
 	/***************************************************************************
 	 *
@@ -57,7 +57,7 @@ public class AbstractDAO {
 	 **************************************************************************/
 
 	/** Logger */
-	private static final Logger LOG = Logger.getLogger(AbstractDAO.class);
+	private static final Logger LOG = Logger.getLogger(JdbcDao.class);
 
 
 
@@ -325,7 +325,7 @@ public class AbstractDAO {
 		 * @return an object containing data about the next row in <code>rs</code>
 		 * @throws SQLException              if there is any problem reading from the {@link ResultSet}
 		 * @throws PermissionDeniedException if the requesting user is not allowed to view the data
-		 * @see AbstractDAO#processResults(ResultSet, RequestContext, ResultExtractor, Supplier, Supplier)
+		 * @see JdbcDao#processResults(ResultSet, RequestContext, ResultExtractor, Supplier, Supplier)
 		 */
 		T extract(@NotNull ResultSet rs, @Nullable RequestContext ctx) throws Exception;
 	}
