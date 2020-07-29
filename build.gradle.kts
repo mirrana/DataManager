@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
 //    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains:annotations:17.0.0")
+    implementation("org.jetbrains:annotations:19.0.0")
     testImplementation("junit:junit:4.12")
 }
 
