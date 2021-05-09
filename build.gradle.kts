@@ -1,6 +1,5 @@
 plugins {
-    java
-//    kotlin("jvm") version "1.3.60"
+    kotlin("jvm") version "1.4.32"
 }
 
 repositories {
@@ -13,7 +12,7 @@ dependencies {
     testImplementation("junit:junit:4.12")
 }
 
-group = "com.abopu"
+group = "com.abopu.data"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
